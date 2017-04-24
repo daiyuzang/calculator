@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Calculator</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				border-radius: 4px;
+			}
+			#content{
+				width: 1000px;
+				height: 300px;
+				margin: auto;
+			}
+			#main{
+				width: 300px;
+				height: 400px;
+				background:grey;
+				border: 1px solid grey;
+			}
+			#screen{
+				width: 280px;
+				height: 60px;
+				margin: auto;
+				background: white;
+				border: 1px solid white;
+			}
+			#screen p{
+				float: right;
+				color: black;
+				text-align: center;
+				font-size: 40px;
+			}
+			#show{
+				width: 260px;
+				height: 20px;
+				margin: auto;
+				background: #333333;
+				border: 1px solid #333333;
+			}
+			#clear{
+				width: 60px;
+				height: 30px;
+				background: #666;
+				border: 1px solid #666;
+				float: right;
+				text-align: center;
+				margin: 10px 10px;
+				cursor: pointer;
+			}
+			#number{
+				width: 280px;
+				height: 150px;
+				margin: auto;
+			}
+			#number ul{
+				width: 280px;
+				height: 40px;
+				list-style-type: none;
+				float: left;
+				margin:3px 10px;
+			}
+			ul li{
+				width: 60px;
+				height: 30px;
+				background: #CC9900;
+				border: 1px solid #CC9900;
+				display: inline-block;
+				text-align: center;
+				cursor: pointer;
+			}
+			.multiply,.reduce,.left,.right,.add,.divide{
+				background: #6699CC;
+				border: 1px solid #6699CC;
+			}
+			#equal{
+				width: 60px;
+				height: 30px;
+				text-align: center;
+				margin: auto;
+				background: #CC6600;
+				cursor: pointer;
+				border: 1px solid #CC6600;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div id="main">
+				<div id="screen"><p>10</p></div>
+				<div id="show"></div>
+				<div id="clear">清除</div>
+				<div style="clear: both;"></div>
+				<div id="number">
+					<ul id="max">
+						<li class="seven">7</li>
+						<li class="eight">8</li>
+						<li class="nine">9</li>
+						<li class="multiply">×</li>
+					</ul>
+					<ul id="middle">
+						<li class="four">4</li>
+						<li class="five">5</li>
+						<li class="six">6</li>
+						<li class="reduce">-</li>
+					</ul>
+					<ul id="min">
+						<li class="one">1</li>
+						<li class="two">2</li>
+						<li class="three">3</li>
+						<li class="add">+</li>
+					</ul>
+					<ul id="symbol">
+						<li class="zero">0</li>
+						<li class="left">(</li>
+						<li class="right">)</li>
+						<li class="divide">÷</li>
+					</ul>
+				</div>
+				<div style="clear: both;"></div>
+				<div id="equal">=</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var EventUtil = {
+			addHandler:function(element,type,handler){
+				if(element.addEventListener)
+					return element.addEventListener(type,handler,false);
+				else if(element.attachEvent)
+					return element.attachEvent("on" + type,handler);
+				else
+					return element["on" + type] = handler;
+			}
+		}
+		var clear = document.getElementById("clear");
+		var clear_show = document.getElementsByTagName("p")[0];
+		EventUtil.addHandler(clear,"click",function(){
+			clear_show.innerHTML = "0";
+		});
+		var arr_li = [];
+		var ul_li = document.getElementsByTagName("li");
+		arr_li = [ul_li[0],ul_li[1],ul_li[2],ul_li[3],ul_li[4],ul_li[5],ul_li[6],ul_li[7],ul_li[8],ul_li[9],ul_li[10],ul_li[11],ul_li[12],ul_li[13],ul_li[14],ul_li[15]];
+		alert(arr_li[0]);
+		for(i in arr_li.length){
+			(function(i){
+				var txt = "0";
+				if(arr_li[i].className == "seven")
+					txt = "7";
+				else if(arr_li[i].className == "eight")
+					txt += "8";
+				else if(arr_li[i].className == "nine")
+					txt += "9";
+				else if(arr_li[i].className == "four")
+					txt += "4";
+				else if(arr_li[i].className == "five")
+					txt += "5";
+				else if(arr_li[i].className == "six")
+					txt += "6";
+				else if(arr_li[i].className == "one")
+					txt += "1";
+				else if(arr_li[i].className == "two")
+					txt += "2";
+				else if(arr_li[i].className == "three")
+					txt += "3";
+				else if(arr_li[i].className == "zero")
+					txt += "0";
+				else if(arr_li[i].className == "multiply"){
+					if(txt.charAt(txt.length - 1) == "(" || txt.charAt(txt.length - 1) == "-" || txt.charAt(txt.length - 1) == "+" || txt.charAt(txt.length - 1) == "÷" || txt.charAt(txt.length - 1) == "×")
+						txt += ""; 
+					else
+						txt += "×";
+				}
+				else if(arr_li[i].className == "divide"){
+					if(txt.charAt(txt.length - 1) == "(" || txt.charAt(txt.length - 1) == "-" || txt.charAt(txt.length - 1) == "+" || txt.charAt(txt.length - 1) == "×" || txt.charAt(txt.length - 1) == "÷")
+						txt += ""; 
+					else
+						txt += "÷";
+				}
+				else if(arr_li[i].className == "reduce"){
+					if(txt.charAt(txt.length - 1) == "(" || txt.charAt(txt.length - 1) == "÷" || txt.charAt(txt.length - 1) == "+" || txt.charAt(txt.length - 1) == "×" || txt.charAt(txt.length - 1) == "-")
+						txt += ""; 
+					else
+						txt += "-";
+				}
+				else if(arr_li[i].className == "add"){
+					if(txt.charAt(txt.length - 1) == "(" || txt.charAt(txt.length - 1) == "÷" || txt.charAt(txt.length - 1) == "+" || txt.charAt(txt.length - 1) == "×" || txt.charAt(txt.length - 1) == "-")
+						txt += ""; 
+					else
+						txt += "+";
+				}
+				else if(arr_li[i].className == "left"){
+					if(txt = "0")
+						txt = "(";
+					else if(txt.charAt(txt.length - 1) == "-" || txt.charAt(txt.length - 1) == "÷" || txt.charAt(txt.length - 1) == "+" || txt.charAt(txt.length - 1) == "×")
+						txt += "(";
+					else
+						txt += "";
+				}
+				else if(arr_li[i].className == "right"){
+					if(txt.charAt(txt.length - 1) == "-" || txt.charAt(txt.length - 1) == "÷" || txt.charAt(txt.length - 1) == "+" || txt.charAt(txt.length - 1) == "×" || txt.charAt(txt.length - 1) == ")" || txt.charAt(txt.length - 1) == "(")
+						txt  += "";
+					else 
+						txt += ")";
+				}
+			})(i)
+		}
+		EventUtil.addHandler(arr_li,"click",function(){
+			var txt;
+		alert(arr_li[0].className);
+			if(arr_li[0].className == "seven"){
+				txt = "7";
+			}
+			clear_show.innerHTML = txt;
+		})
+	</script>
+</html>
